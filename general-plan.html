@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roadmap سلسلة Nano2B</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0d14;
+      --surface: #111520;
+      --surface2: #161b2e;
+      --border: #1e2640;
+      --accent: #4f8ef7;
+      --accent2: #7c3aed;
+      --accent3: #10b981;
+      --accent4: #f59e0b;
+      --accent5: #ef4444;
+      --text: #e2e8f0;
+      --text-muted: #64748b;
+      --text-dim: #94a3b8;
+      --glow: rgba(79, 142, 247, 0.15);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(79,142,247,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79,142,247,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Ambient blobs */
+    body::after {
+      content: '';
+      position: fixed;
+      top: -200px;
+      right: -200px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(124,58,237,0.12) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .blob2 {
+      position: fixed;
+      bottom: -150px;
+      left: -150px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(79,142,247,0.1) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 24px 100px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Sticky badge */
+    .sticky-badge-wrap {
+      position: sticky;
+      top: 18px;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      pointer-events: none;
+      margin-bottom: -52px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(10,13,20,0.8);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(79,142,247,0.3);
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      padding: 8px 20px;
+      border-radius: 100px;
+      letter-spacing: 0.05em;
+      pointer-events: auto;
+      transition: border-color 0.45s ease, color 0.45s ease, box-shadow 0.45s ease;
+      box-shadow: 0 4px 28px rgba(0,0,0,0.5), 0 0 0 0 rgba(79,142,247,0.3);
+    }
+
+    .badge-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+      flex-shrink: 0;
+      animation: pulseDot 2s infinite;
+      transition: color 0.45s ease;
+    }
+
+    .badge-text { transition: opacity 0.15s; }
+
+    /* Header */
+    .hero {
+      text-align: center;
+      margin-bottom: 72px;
+      padding-top: 58px;
+      animation: fadeDown 0.8s ease both;
+    }
+
+    h1 {
+      font-size: clamp(34px, 5vw, 56px);
+      font-weight: 900;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    h1 .highlight {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      color: var(--text-dim);
+      font-size: 19px;
+      font-weight: 400;
+    }
+
+    /* Phase blocks */
+    .phase {
+      margin-bottom: 48px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .phase:nth-child(2) { animation-delay: 0.1s; }
+    .phase:nth-child(3) { animation-delay: 0.2s; }
+    .phase:nth-child(4) { animation-delay: 0.3s; }
+    .phase:nth-child(5) { animation-delay: 0.4s; }
+
+    .phase-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      flex-direction: row-reverse;
+    }
+
+    .phase-icon {
+      font-size: 34px;
+      line-height: 1;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .phase-info { flex: 1; }
+
+    .phase-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .phase-title {
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .phase-desc {
+      color: var(--text-dim);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.8;
+    }
+
+    /* Phase color accents */
+    .phase-1 .phase-tag { color: var(--accent3); }
+    .phase-1 .phase-header { border-bottom-color: rgba(16,185,129,0.2); }
+    .phase-1 .episode-number { color: var(--accent3); background: rgba(16,185,129,0.08); border-color: rgba(16,185,129,0.2); }
+
+    .phase-2 .phase-tag { color: var(--accent); }
+    .phase-2 .phase-header { border-bottom-color: rgba(79,142,247,0.2); }
+    .phase-2 .episode-number { color: var(--accent); background: rgba(79,142,247,0.08); border-color: rgba(79,142,247,0.2); }
+
+    .phase-3 .phase-tag { color: var(--accent2); }
+    .phase-3 .phase-header { border-bottom-color: rgba(124,58,237,0.2); }
+    .phase-3 .episode-number { color: var(--accent2); background: rgba(124,58,237,0.08); border-color: rgba(124,58,237,0.2); }
+
+    .phase-4 .phase-tag { color: var(--accent4); }
+    .phase-4 .phase-header { border-bottom-color: rgba(245,158,11,0.2); }
+    .phase-4 .episode-number { color: var(--accent4); background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.2); }
+
+    /* Episodes */
+    .episodes { display: flex; flex-direction: column; gap: 12px; }
+
+    .episode {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 24px 24px 24px;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      cursor: default;
+    }
+
+    .episode:hover {
+      border-color: rgba(79,142,247,0.3);
+      transform: translateX(-3px);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3), 4px 0 0 var(--accent) inset;
+    }
+
+    .phase-1 .episode:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.3), 4px 0 0 var(--accent3) inset; }
+    .phase-2 .episode:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.3), 4px 0 0 var(--accent) inset; }
+    .phase-3 .episode:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.3), 4px 0 0 var(--accent2) inset; }
+    .phase-4 .episode:hover { box-shadow: 0 4px 24px rgba(0,0,0,0.3), 4px 0 0 var(--accent4) inset; }
+
+    .episode-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+      flex-direction: row-reverse;
+    }
+
+    .episode-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 6px;
+      border: 1px solid;
+      flex-shrink: 0;
+    }
+
+    .episode-title {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.4;
+      flex: 1;
+      text-align: right;
+    }
+
+    .episode-title .en {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-muted);
+      display: block;
+      margin-top: 3px;
+    }
+
+    .episode-points {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-right: 8px;
+    }
+
+    .episode-points li {
+      font-size: 15px;
+      color: var(--text-dim);
+      font-weight: 400;
+      line-height: 1.7;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      flex-direction: row-reverse;
+      text-align: right;
+    }
+
+    .episode-points li::before {
+      content: '─';
+      color: var(--border);
+      flex-shrink: 0;
+      margin-top: 3px;
+      font-size: 12px;
+    }
+
+    .episode-points li code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      background: rgba(79,142,247,0.1);
+      color: var(--accent);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+
+    /* Divider */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 48px 0;
+    }
+
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+
+    .divider-dot {
+      width: 6px; height: 6px;
+      background: var(--border);
+      border-radius: 50%;
+    }
+
+    /* Optional badge */
+    .optional-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(245,158,11,0.08);
+      border: 1px solid rgba(245,158,11,0.2);
+      color: var(--accent4);
+      font-size: 13px;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 5px 14px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 80px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Animations */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 currentColor; }
+      50%       { opacity: 0.6; transform: scale(0.85); }
+    }
+
+    @keyframes phaseGlow1 {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); }
+      50%       { box-shadow: 0 0 32px 4px rgba(16,185,129,0.18); }
+    }
+    @keyframes phaseGlow2 {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(79,142,247,0); }
+      50%       { box-shadow: 0 0 32px 4px rgba(79,142,247,0.18); }
+    }
+    @keyframes phaseGlow3 {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(124,58,237,0); }
+      50%       { box-shadow: 0 0 32px 4px rgba(124,58,237,0.18); }
+    }
+    @keyframes phaseGlow4 {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(245,158,11,0); }
+      50%       { box-shadow: 0 0 32px 4px rgba(245,158,11,0.18); }
+    }
+
+    /* =====================================================
+       CURRENT SECTION — just add this class to any .phase
+       e.g.  <section class="phase phase-2 current-section">
+       ===================================================== */
+
+    /* Badge colors per phase when current-section is active */
+    body:has(.phase-1.current-section) .hero-badge {
+      color: var(--accent3);
+      border-color: rgba(16,185,129,0.45);
+      box-shadow: 0 4px 28px rgba(0,0,0,0.5), 0 0 20px 3px rgba(16,185,129,0.2);
+    }
+    body:has(.phase-2.current-section) .hero-badge {
+      color: var(--accent);
+      border-color: rgba(79,142,247,0.45);
+      box-shadow: 0 4px 28px rgba(0,0,0,0.5), 0 0 20px 3px rgba(79,142,247,0.2);
+    }
+    body:has(.phase-3.current-section) .hero-badge {
+      color: var(--accent2);
+      border-color: rgba(124,58,237,0.45);
+      box-shadow: 0 4px 28px rgba(0,0,0,0.5), 0 0 20px 3px rgba(124,58,237,0.2);
+    }
+    body:has(.phase-4.current-section) .hero-badge {
+      color: var(--accent4);
+      border-color: rgba(245,158,11,0.45);
+      box-shadow: 0 4px 28px rgba(0,0,0,0.5), 0 0 20px 3px rgba(245,158,11,0.2);
+    }
+
+    /* Badge text — shown via CSS content on the ::after of badge-text */
+    .badge-text::after { content: attr(data-default); }
+    body:has(.phase-1.current-section) .badge-text::after { content: attr(data-phase1); }
+    body:has(.phase-2.current-section) .badge-text::after { content: attr(data-phase2); }
+    body:has(.phase-3.current-section) .badge-text::after { content: attr(data-phase3); }
+    body:has(.phase-4.current-section) .badge-text::after { content: attr(data-phase4); }
+
+    /* Pulsing glow on the active section itself */
+
+
+    
+   @media screen and (min-width: 1025px) {
+    .phase { 
+        padding: 50px; 
+    .current-section { border-radius: 16px; }
+
+    .phase-1.current-section { animation: phaseGlow1 2.5s ease-in-out infinite; }
+    .phase-2.current-section { animation: phaseGlow2 2.5s ease-in-out infinite; }
+    .phase-3.current-section { animation: phaseGlow3 2.5s ease-in-out infinite; }
+    .phase-4.current-section { animation: phaseGlow4 2.5s ease-in-out infinite; }
+    }
+}
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  </style>
+</head>
+<body>
+<div class="blob2"></div>
+
+<!-- Sticky scroll-aware badge -->
+<div class="sticky-badge-wrap">
+  <div class="hero-badge" id="heroBadge">
+    <span class="badge-dot"></span>
+    <span class="badge-text"
+      data-default="Nano2B Series · Roadmap v1.0"
+      data-phase1="Phase 01 · المرحلة الأولى"
+      data-phase2="Phase 02 · المرحلة الثانية"
+      data-phase3="Phase 03 · المرحلة الثالثة"
+      data-phase4="Phase 04 · المرحلة الرابعة"
+    ></span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Hero -->
+  <header class="hero">
+    <h1> <span class="highlight">Nano2B</span> Roadmap </h1> 
+    <p class="hero-sub">From Scratch to Fine-Tuning LLMs</p>
+  </header>
+
+  <!-- Phase 1 -->
+  <section class="phase phase-1  current-section">
+    <div class="phase-header">
+      <div class="phase-icon">🛠️</div>
+      <div class="phase-info">
+        <div class="phase-tag">Phase 01 · The Nano Phase</div>
+        <h2 class="phase-title">المرحلة الأولى: مرحلة التأسيس</h2>
+        <p class="phase-desc">الهدف من المرحلة دي هو كسر رهبة النماذج اللغوية وفهم الـ Architecture من الداخل عن طريق بناء <strong>nanoGPT</strong> من الصفر باستخدام PyTorch.</p>
+      </div>
+    </div>
+    <div class="episodes">
+      <div class="episode">
+        <div class="episode-top">
+          <span class="episode-number">#01</span>
+          <div class="episode-title">
+            نقطة الصفر
+            <span class="en">Tokenization &amp; Embeddings</span>
+          </div>
+        </div>
+        <ul class="episode-points">
+          <li>مقدمة سريعة عن السلسلة ومفهوم الـ LLMs.</li>
+          <li>إزاي الكمبيوتر بيفهم الكلمات؟ (شرح وتطبيق الـ Tokenization).</li>
+          <li>تحويل الأرقام لمعاني (Word &amp; Position Embeddings).</li>
+        </ul>
+      </div>
+      <div class="episode">
+        <div class="episode-top">
+          <span class="episode-number">#02</span>
+          <div class="episode-title">
+            قلب الـ Transformer
+            <span class="en">Self-Attention</span>
+          </div>
+        </div>
+        <ul class="episode-points">
+          <li>شرح مبسط للـ Attention Mechanism.</li>
+          <li>كتابة كود الـ <code>Query, Key, Value</code> من الصفر.</li>
+          <li>الفرق بين Single-Head و Multi-Head Attention.</li>
+        </ul>
+      </div>
+      <div class="episode">
+        <div class="episode-top">
+          <span class="episode-number">#03</span>
+          <div class="episode-title">
+            تجميع البازل
+            <span class="en">Building nanoGPT</span>
+          </div>
+        </div>
+        <ul class="episode-points">
+          <li>بناء الـ Transformer Block الكامل (Attention + Feed Forward + Layer Norm).</li>
+          <li>تجميع الـ Blocks لبناء معمارية GPT مصغرة.</li>
+        </ul>
+      </div>
+      <div class="episode">
+        <div class="episode-top">
+          <span class="episode-number">#04</span>
+          <div class="episode-title">
+            التدريب والنتيجة
+            <span class="en">Training the Nano Model</span>
+          </div>
+        </div>
+        <ul class="episode-points">
+          <li>تجهيز داتا بسيطة (نصوص عربية أو إنجليزية بسيطة).</li>
+          <li>كتابة الـ Training Loop (Loss, Backpropagation, Optimizer).</li>
+          <li>تجربة النموذج وتوليد أول نص.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-line"></div><div class="divider-dot"></div><div class="divider-line"></div></div>
+
+  <!-- Phase 2 -->
+  <section class="phase phase-2">
+    <div class="phase-header">
+      <div class="phase-icon">🌉</div>
+      <div class="phase-info">
+        <div class="phase-tag">Phase 02 · The Bridge</div>
+        <h2 class="phase-title">المرحلة الثانية: جسر العبور</h2>
+        <p class="phase-desc">الهدف هنا هو الانتقال من الأكواد الـ Scratch لاستخدام الأدوات القياسية في الصناعة والتعامل مع النماذج الأكبر.</p>
+      </div>
+    </div>
+    <div class="episodes">
+      <div class="episode">
+        <div class="episode-top">
+          <span class="episode-number">#05</span>
+          <div class="episode-title">
+            الدخول لعالم Hugging Face
+          </div>
+        </div>
+        <ul class="episode-points">
+          <li>استخدام مكتبة <code>transformers</code> و <code>datasets</code>.</li>
+          <li>إزاي نحمل نموذج جاهز ونعمله Inference.</li>
+          <li>استكشاف النماذج مفتوحة المصدر (Open-source Models).</li>
+        </ul>
+      </div>
+      <div class="episode">
+        <div class="episode-top">
+          <span class="episode-number">#06</span>
+          <div class="episode-title">
+            أزمة الرامات والحلول السحرية
+            <span class="en">Quantization</span>
+          </div>
+        </div>
+        <ul class="episode-points">
+          <li>ليه مش بنقدر ندرب نماذج كبيرة على أجهزتنا العادية؟</li>
+          <li>شرح الـ Precision (<code>FP32, FP16, BF16</code>).</li>
+          <li>تقنيات الضغط (Quantization) زي 8-bit و 4-bit (<code>bitsandbytes</code>).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-line"></div><div class="divider-dot"></div><div class="divider-line"></div></div>
+
+  <!-- Phase 3 -->
+  <section class="phase phase-3">
+    <div class="phase-header">
+      <div class="phase-icon">🚀</div>
+      <div class="phase-info">
+        <div class="phase-tag">Phase 03 · The 2B & Fine-tuning Phase</div>
+        <h2 class="phase-title">المرحلة الثالثة: الاحتراف</h2>
+        <p class="phase-desc">الوصول للهدف النهائي للسلسلة؛ التعامل مع نموذج حقيقي بحجم 2B (زي Gemma 2B أو Qwen 1.5B) وتدريبه على داتا مخصصة.</p>
+      </div>
+    </div>
+    <div class="episodes">
+      <div class="episode">
+        <div class="episode-top">
+          <span class="episode-number">#07</span>
+          <div class="episode-title">
+            سر التعديل على النماذج العملاقة
+            <span class="en">LoRA &amp; PEFT</span>
+          </div>
+        </div>
+        <ul class="episode-points">
+          <li>ليه مش بنعمل Full Fine-tuning؟</li>
+          <li>شرح نظرية LoRA (Low-Rank Adaptation) وكيفية عملها.</li>
+          <li>الدمج بين الضغط و LoRA للوصول لـ QLoRA.</li>
+        </ul>
+      </div>
+      <div class="episode">
+        <div class="episode-top">
+          <span class="episode-number">#08</span>
+          <div class="episode-title">
+            تجهيز الداتا لنموذج حقيقي
+            <span class="en">Dataset Preparation</span>
+          </div>
+        </div>
+        <ul class="episode-points">
+          <li>فهم الـ Instruction Tuning.</li>
+          <li>تجهيز هيكل الداتا (Prompt Formats).</li>
+          <li>رفع الداتا وتجهيزها للتدريب.</li>
+        </ul>
+      </div>
+      <div class="episode">
+        <div class="episode-top">
+          <span class="episode-number">#09</span>
+          <div class="episode-title">
+            يوم التدريب
+            <span class="en">The QLoRA Fine-tuning Hands-on</span>
+          </div>
+        </div>
+        <ul class="episode-points">
+          <li>تحميل نموذج 2B في بيئة التدريب (Colab أو Local).</li>
+          <li>استخدام <code>SFTTrainer</code> لعمل Fine-tuning.</li>
+          <li>مراقبة التدريب باستخدام أدوات زي Weights &amp; Biases (<code>WandB</code>).</li>
+        </ul>
+      </div>
+      <div class="episode">
+        <div class="episode-top">
+          <span class="episode-number">#10</span>
+          <div class="episode-title">
+            الحصاد
+            <span class="en">Merging &amp; Inference</span>
+          </div>
+        </div>
+        <ul class="episode-points">
+          <li>دمج أوزان الـ LoRA مع النموذج الأساسي (Merging Weights).</li>
+          <li>تجربة النموذج بعد التدريب ومقارنته بنسخته الأصلية.</li>
+          <li>نصائح لتحسين النتائج وتجنب الـ Overfitting.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><div class="divider-line"></div><div class="divider-dot"></div><div class="divider-line"></div></div>
+
+  <!-- Phase 4 -->
+  <section class="phase phase-4">
+    <div class="phase-header">
+      <div class="phase-icon">🎁</div>
+      <div class="phase-info">
+        <div class="optional-badge">OPTIONAL</div>
+        <div class="phase-tag">Phase 04 · Deployment</div>
+        <h2 class="phase-title">المرحلة الرابعة: النشر</h2>
+      </div>
+    </div>
+    <div class="episodes">
+      <div class="episode">
+        <div class="episode-top">
+          <span class="episode-number">#11</span>
+          <div class="episode-title">
+            تشغيل النموذج محلياً وبناء واجهة
+          </div>
+        </div>
+        <ul class="episode-points">
+          <li>تحويل النموذج لصيغة <code>GGUF</code> لتشغيله على أجهزة عادية باستخدام Ollama.</li>
+          <li>بناء واجهة شات بسيطة باستخدام Gradio أو Streamlit.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    Nano2B Series · 11 Episodes · RTL Arabic
+  </footer>
+
+</div>
+</body>
+</html>
